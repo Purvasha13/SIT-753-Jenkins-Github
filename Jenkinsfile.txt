@@ -66,13 +66,13 @@ pipeline {
     post {
         // Configure email notifications at the end of test and security scan stages
         success {
-            mail to: 'email@example.com',
+            mail to: 'purvasha1013@@gmail.com',
                  subject: 'Pipeline Status: Success',
                  body: 'The pipeline has completed successfully.',
                  attachmentsPattern: 'security-scan-report.html'
         }
         failure {
-            mail to: 'email@example.com',
+            mail to: 'purvasha1013@@gmail.com',
                  subject: 'Pipeline Status: Failure',
                  body: 'The pipeline has failed. Please check the logs for details.',
                  attachmentsPattern: 'security-scan-report.html'
