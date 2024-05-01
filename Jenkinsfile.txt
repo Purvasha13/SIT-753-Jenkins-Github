@@ -67,18 +67,15 @@ pipeline {
     success {
         mail to: 'purvasha1013@gmail.com',
              subject: 'Pipeline Status: Success',
-             body: 'The pipeline has completed successfully.',
-             attachLog: true,
-             attachmentsPattern: 'security-scan-report.html'
+             body: 'The pipeline has completed successfully.'
     }
     failure {
         mail to: 'purvasha1013@gmail.com',
              subject: 'Pipeline Status: Failure',
-             body: 'The pipeline has failed. Please check the logs for details.',
-             attachLog: true,
-             attachmentsPattern: 'security-scan-report.html'
+             body: 'The pipeline has failed. Please check the logs for details.'
     }
 }
+
 
 
 }
