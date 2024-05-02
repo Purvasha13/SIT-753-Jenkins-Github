@@ -1,56 +1,30 @@
 pipeline {
     agent any
-
     stages {
         stage('Build') {
             steps {
-                // Step to build the code using Maven
+                // Task: Build the code using a build automation tool (e.g., Maven)
                 sh 'mvn clean package'
             }
         }
-
         stage('Unit and Integration Tests') {
             steps {
-                // Step to run unit tests
+                // Task: Run unit tests and integration tests using test automation tools
                 sh 'mvn test'
-                // Additional steps for integration tests
             }
         }
-
         stage('Code Analysis') {
             steps {
-                // Step to integrate a code analysis tool (e.g., SonarQube)
-                // Example: withSonarQubeEnv('SonarQubeServer') {
-                //     sh 'mvn sonar:sonar'
-                // }
+                // Task: Integrate a code analysis tool (e.g., SonarQube) to analyze the code
+                // Example: Run SonarQube analysis
+                sh 'sonar-scanner'
             }
         }
-
         stage('Security Scan') {
             steps {
-                // Step to perform a security scan using a tool like OWASP ZAP
-                // Example: sh 'zap-cli --start --url http://example.com --quick-scan --exit'
-            }
-        }
-
-        stage('Deploy to Staging') {
-            steps {
-                // Step to deploy the application to a staging server (e.g., AWS EC2 instance)
-                // Example: sh 'ansible-playbook deploy-staging.yml'
-            }
-        }
-
-        stage('Integration Tests on Staging') {
-            steps {
-                // Step to run integration tests on the staging environment
-                // Example: sh 'ansible-playbook run-integration-tests.yml'
-            }
-        }
-
-        stage('Deploy to Production') {
-            steps {
-                // Step to deploy the application to a production server (e.g., AWS EC2 instance)
-                // Example: sh 'ansible-playbook deploy-production.yml'
+                // Task: Perform a security scan on the code using a security scanning tool (e.g., OWASP ZAP)
+                // Example: Run OWASP ZAP security scan
+                sh 'zap-cli --spider http://127.0.0.1:5500/index.html --ajax spider --scanners all --auth <username>:<password>'
             }
         }
     }
