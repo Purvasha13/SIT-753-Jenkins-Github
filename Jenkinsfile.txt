@@ -4,47 +4,45 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                // Build the code using Maven
                 sh 'mvn clean package'
             }
         }
-        stage('Unit Tests') {
+        stage('Unit and Integration Tests') {
             steps {
+                // Run unit tests
                 sh 'mvn test'
-            }
-        }
-        stage('Integration Tests') {
-            steps {
                 // Run integration tests using Selenium or any other tool
             }
         }
         stage('Code Analysis') {
             steps {
                 // Integrate SonarQube with Jenkins for code analysis
-                // Example command: sh 'sonar-scanner'
+                sh 'sonar-scanner'
             }
         }
         stage('Security Scan') {
             steps {
                 // Perform security scanning using OWASP ZAP or Snyk
-                // Example command: sh 'snyk test'
+                sh 'snyk test'
             }
         }
         stage('Deploy to Staging') {
             steps {
                 // Deploy the application to a staging server using AWS CodeDeploy or Jenkins
-                // Example command: sh 'aws deploy create-deployment --application-name MyApp --deployment-group-name MyDeploymentGroup --s3-location s3://my-bucket/my-app.zip'
+                sh 'aws deploy create-deployment --application-name MyApp --deployment-group-name MyDeploymentGroup --s3-location s3://my-bucket/my-app.zip'
             }
         }
         stage('Integration Tests on Staging') {
             steps {
                 // Run integration tests on the staging environment using Selenium
-                // Example command: sh 'mvn integration-test'
+                sh 'mvn integration-test'
             }
         }
         stage('Deploy to Production') {
             steps {
                 // Deploy the application to a production server using AWS CodeDeploy or Jenkins
-                // Example command: sh 'aws deploy create-deployment --application-name MyApp --deployment-group-name MyProductionGroup --s3-location s3://my-bucket/my-app.zip'
+                sh 'aws deploy create-deployment --application-name MyApp --deployment-group-name MyProductionGroup --s3-location s3://my-bucket/my-app.zip'
             }
         }
     }
