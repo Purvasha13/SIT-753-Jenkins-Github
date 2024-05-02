@@ -24,7 +24,7 @@ pipeline {
         
         stage('Security Scan') {
             steps {
-                // Integrate a security scanning tool like OWASP ZAP or Snyk
+                // Integrate a security scanning tool like Snyk
                 sh 'snyk test'
             }
         }
