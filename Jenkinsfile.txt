@@ -7,9 +7,13 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-        stage('Unit and Integration Tests') {
+        stage('Unit Tests') {
             steps {
                 sh 'mvn test'
+            }
+        }
+        stage('Integration Tests') {
+            steps {
                 // Run integration tests using Selenium or any other tool
             }
         }
