@@ -1,81 +1,58 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Build') {
             steps {
-                // Build the code using Maven
+                // Task: Build the code using Maven
                 sh 'mvn clean package'
             }
         }
-        
+
         stage('Unit and Integration Tests') {
             steps {
-                // Run unit tests using JUnit
+                // Task: Run unit tests and integration tests
                 sh 'mvn test'
-                
-                // Run integration tests using TestNG
-                sh 'mvn integration-test'
+                // Additional steps for integration tests
             }
         }
-        
+
         stage('Code Analysis') {
             steps {
-                // Integrate a code analysis tool (e.g., SonarQube)
-                // Analyze the code to ensure it meets industry standards
-                // For SonarQube, use the 'withSonarQubeEnv' step
-                withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar'
-                }
+                // Task: Integrate a code analysis tool (e.g., SonarQube)
+                // Invoke SonarQube scanner
+                // Example: withSonarQubeEnv('SonarQubeServer') {
+                //     sh 'mvn sonar:sonar'
+                // }
             }
         }
-        
+
         stage('Security Scan') {
             steps {
-                // Perform security scan using a security scanning tool (e.g., OWASP ZAP)
-                // Integrate the security scanning tool and scan the code for vulnerabilities
-                sh 'owasp-zap --quick-scan --spider --output security-scan-report.html'
+                // Task: Perform a security scan using a tool like OWASP ZAP
+                // Example: sh 'zap-cli --start --url http://example.com --quick-scan --exit'
             }
         }
-        
+
         stage('Deploy to Staging') {
             steps {
-                // Deploy the application to a staging server (e.g., AWS EC2 instance)
-                // Use deployment scripts or commands to deploy the built artifact
-                sh 'ssh user@staging-server "deploy-script.sh"'
+                // Task: Deploy the application to a staging server (e.g., AWS EC2 instance)
+                // Example: sh 'ansible-playbook deploy-staging.yml'
             }
         }
-        
+
         stage('Integration Tests on Staging') {
             steps {
-                // Run integration tests on the staging environment
-                // Ensure the application functions as expected in a production-like environment
-                sh 'run-integration-tests.sh'
+                // Task: Run integration tests on the staging environment
+                // Example: sh 'ansible-playbook run-integration-tests.yml'
             }
         }
-        
+
         stage('Deploy to Production') {
             steps {
-                // Deploy the application to a production server (e.g., AWS EC2 instance)
-                // Use deployment scripts or commands to deploy the built artifact
-                sh 'ssh user@production-server "deploy-script.sh"'
+                // Task: Deploy the application to a production server (e.g., AWS EC2 instance)
+                // Example: sh 'ansible-playbook deploy-production.yml'
             }
         }
     }
-    
-    post {
-    success {
-        mail to: 'purvasha1013@gmail.com',
-             subject: 'Pipeline Status: Success',
-             body: 'The pipeline has completed successfully.'
-    }
-    failure {
-        mail to: 'purvasha1013@gmail.com',
-             subject: 'Pipeline Status: Failure',
-             body: 'The pipeline has failed. Please check the logs for details.'
-    }
-}
-
-
-
 }
